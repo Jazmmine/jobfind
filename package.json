@@ -1,0 +1,20 @@
+{
+  "name": "jobfind",
+  "version": "1.0.0",
+  "description": "Utilizar el Api de Google Maps e Ineed para crear un buscador de trabajo",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "js",
+    "ajax",
+    "express"
+  ],
+  "author": "Jazmine",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
