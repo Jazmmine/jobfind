@@ -6,27 +6,17 @@ function initMap() {
   });
 }
 
-var template =  '<div class="row">' + 
-            '<div class="col s12">' +
-                '<span class="trabajo-general">{{trabajogeneral}}</span>' +
-                '<span class="lugar-general">{{lugargeneral}}</span>' +
-           ' </div>' +
-        '</div>' +
-        '<div class="row">' +
-            '<div class="col s12">' + 
-                '<div class="titulo-deltrabajo">{{titulodeltrabajo}}</div>' +
-            '</div>' + 
-        '</div>' +
-        '<div class="row">' + 
-            '<div class="col s12">' +
-                '<div class="lugar-deltrabajo">{{lugardeltrabajo}}</div>' +
+var template = '<div class="contenedor-template">' +
+            '<div class="row">' +
+                '<a class="col s12 urlindeed" href="{{url}}" target="_blank">' +
+                    '<div class="searchResult" id="{{id}}">' +
+                        '<h2 class="titulo-deltrabajo">{{titulodeltrabajo}}</h2>' +
+                        '<p class="compania">{{compania}}<span class="lugar-compania">-{{lugarCompania}}</span></p>' +
+                        '<p class="requerimiento-deltrabajo">{{requerimientodeltrabajo}}</p>' +
+                    '</div>' +
+                '</a>' +
             '</div>' +
-        '</div>' +
-        '<div class="row">' +
-            '<div class="col s12">' +
-                '<div class="requerimiento-deltrabajo">{{requerimientodeltrabajo}}</div>' +
-            '</div>' +
-        '</div>' 
+        '</div>'
 
 $(document).ready(function(){
     $("#btn-resultado").click(function(){
@@ -49,7 +39,19 @@ $(document).ready(function(){
             dataType: 'jsonp',
             success: function(response){
                 console.log(response);
-                $("#informacion-indeed").html(template.replace("{{trabajogeneral}}",response.results[0].city))
+                var dataTotal = "";
+                $.each(response.results, function(i, objetoInfoTrabajo){
+                    console.log(objetoInfoTrabajo);
+                    dataTotal += template
+                                .replace("{{url}}", objetoInfoTrabajo.url)
+                                .replace("{{id}}", objetoInfoTrabajo.jobkey)                        
+                                .replace("{{titulodeltrabajo}}", objetoInfoTrabajo.jobtitle)
+                                .replace("{{compania}}", objetoInfoTrabajo.company)
+                                .replace("{{lugarCompania}}", objetoInfoTrabajo.formattedLocationFull)
+                                .replace("{{requerimientodeltrabajo}}", objetoInfoTrabajo.snippet);
+                });
+                $("#informacion-indeed").addClass("contenedor-template");
+                $("#info-template").html(dataTotal);
 
             }
 
